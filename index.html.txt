@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="html-tag">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XO Ultra - Hyper Neon</title>
+    <style>
+        /* «·„ €Ì—«  «·’«Œ»… Ê«·„Õ”‰… ··Ê÷⁄Ì‰ */
+        :root {
+            --bg-color: #ff0055; 
+            --container-bg: #ffffff;
+            --text-color: #0b0b16;
+            --text-secondary: #7000ff;
+            --x-color: #0066ff; 
+            --o-color: #ff0055; 
+            --accent-color: #39ff14; 
+            --border-color: #7000ff;
+            --cell-bg: #fff0f5;
+            --cell-hover: #ffe4e6;
+            --input-bg: #ffffff;
+            --shadow: 0 20px 50px rgba(112, 0, 255, 0.2);
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #000000; 
+            --container-bg: #05050b;
+            --text-color: #00ffff; 
+            --text-secondary: #ff00ff; 
+            --x-color: #00ffff; 
+            --o-color: #ff0055; 
+            --accent-color: #39ff14; 
+            --border-color: #ff00ff;
+            --cell-bg: #0d0d1f;
+            --cell-hover: #1b1b3a;
+            --input-bg: #05050b;
+            --shadow: 0 0 30px rgba(0, 255, 255, 0.2), 0 0 60px rgba(255, 0, 255, 0.2);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Impact', 'Segoe UI', sans-serif;
+            transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 15px;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        [data-theme="dark"] body {
+            background-image: linear-gradient(rgba(255, 0, 255, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 0, 255, 0.05) 1px, transparent 1px);
+        }
+
+        /* «·‘«‘«  «·„” ﬁ·… */
+        .screen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle, #ff0055 0%, #000000 100%);
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            z-index: 100;
+        }
+
+        [data-theme="dark"] .screen {
+            background: radial-gradient(circle, #240046 0%, #000000 100%);
+        }
+
+        .screen-title {
+            font-size: 4rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            background: linear-gradient(45deg, #00ffff, #ff00ff, #39ff14);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: crazyGlow 1s infinite alternate;
+            margin-bottom: 30px;
+            text-align: center;
+            letter-spacing: 3px;
+        }
+
+        @keyframes crazyGlow {
+            0% { filter: drop-shadow(0 0 15px #00ffff) contrast(1.5); }
+            100% { filter: drop-shadow(0 0 35px #ff0055) contrast(1.5); }
+        }
+
+        /* √“—«— ÷Œ„… Ê’«Œ»… ··‘«‘«  */
+        .big-btn {
+            padding: 18px 45px;
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: black;
+            background: #39ff14;
+            border: 3px solid black;
+            cursor: pointer;
+            box-shadow: 0 0 20px #39ff14;
+            transform: skewX(-10deg);
+            margin: 10px;
+            width: 290px;
+            text-align: center;
+        }
+
+        .big-btn:hover {
+            transform: skewX(-10deg) scale(1.08);
+            background: #00ffff;
+            box-shadow: 0 0 35px #00ffff;
+        }
+
+        /* √“—«— ’⁄Ê»… „Œ’’… «·√·Ê«‰ */
+        .btn-easy { background: #39ff14; box-shadow: 0 0 15px #39ff14; }
+        .btn-medium { background: #ffcc00; box-shadow: 0 0 15px #ffcc00; }
+        .btn-hard { background: #ff5500; box-shadow: 0 0 15px #ff5500; }
+        .btn-impossible { background: #ff0055; box-shadow: 0 0 25px #ff0055; color: white; }
+
+        /* Õ«ÊÌ… «··⁄»… «·—∆Ì”Ì… */
+        .game-container {
+            background-color: var(--container-bg);
+            padding: 25px;
+            border: 4px solid var(--border-color);
+            box-shadow: var(--shadow);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            display: none; 
+            border-radius: 24px;
+            position: relative;
+        }
+
+        /* «·»«— «·⁄·ÊÌ ··√“—«— */
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .icon-btn {
+            background: var(--cell-bg);
+            border: 2px solid var(--border-color);
+            color: var(--text-color);
+            padding: 10px;
+            font-size: 0.95rem;
+            cursor: pointer;
+            font-weight: bold;
+            flex: 1;
+            border-radius: 12px;
+        }
+        .icon-btn:hover {
+            background: var(--text-secondary);
+            color: #ffffff;
+            box-shadow: 0 0 15px var(--text-secondary);
+            transform: translateY(-2px);
+        }
+
+        .status {
+            font-size: 1.35rem;
+            margin-bottom: 20px;
+            font-weight: 900;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+        }
+
+        /* ‘»ﬂ… «··⁄» Ê«·„—»⁄«  */
+        .board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin-bottom: 20px;
+        }
+
+        .cell {
+            aspect-ratio: 1;
+            background-color: var(--cell-bg);
+            border: 3px solid var(--border-color);
+            border-radius: 18px; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 3.5rem;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 0 6px 0 var(--border-color);
+            transform: translateY(0);
+        }
+
+        .cell:hover {
+            background-color: var(--cell-hover);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 0 var(--border-color), 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .cell:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 var(--border-color);
+        }
+
+        .cell.x { color: var(--x-color); animation: cellPop 0.25s ease-out; text-shadow: 0 0 10px rgba(0, 102, 255, 0.3); }
+        .cell.o { color: var(--o-color); animation: cellPop 0.25s ease-out; text-shadow: 0 0 10px rgba(255, 0, 85, 0.3); }
+
+        @keyframes cellPop {
+            0% { transform: scale(0.6); }
+            70% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /*  ⁄“Ì“  ÊÂÃ «·„—»⁄«  ›Ì «·Ê÷⁄ «·œ«ﬂ‰ */
+        [data-theme="dark"] .cell { box-shadow: 0 6px 0 var(--border-color); }
+        [data-theme="dark"] .cell:hover { box-shadow: 0 10px 0 var(--border-color), 0 0 20px var(--text-secondary); }
+        [data-theme="dark"] .cell.x { text-shadow: 0 0 15px #00ffff, 0 0 30px #00ffff; }
+        [data-theme="dark"] .cell.o { text-shadow: 0 0 15px #ff0055, 0 0 30px #ff0055; }
+
+        /*  √ÀÌ— «·›Ê“ */
+        .cell.winner {
+            background-color: var(--accent-color) !important;
+            border-color: var(--accent-color) !important;
+            color: black !important;
+            text-shadow: none !important;
+            box-shadow: 0 4px 0 black, 0 0 25px var(--accent-color) !important;
+            animation: winnerWobble 0.4s infinite alternate;
+        }
+
+        @keyframes winnerWobble {
+            0% { transform: scale(1) rotate(-1deg); }
+            100% { transform: scale(1.03) rotate(1deg); }
+        }
+
+        .reset-btn {
+            width: 100%;
+            padding: 14px;
+            font-size: 1.15rem;
+            font-weight: 1000;
+            color: white;
+            background: var(--text-secondary);
+            border: 3px solid var(--border-color);
+            cursor: pointer;
+            border-radius: 16px;
+            box-shadow: 0 5px 0 var(--border-color);
+        }
+
+        .reset-btn:hover {
+            background: var(--accent-color);
+            color: black;
+            box-shadow: 0 7px 0 black, 0 0 20px var(--accent-color);
+            transform: translateY(-3px);
+        }
+        
+        .reset-btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 black;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="splash-screen" class="screen">
+        <h1 class="screen-title">XO Ultra</h1>
+        <button class="big-btn" onclick="showModeScreen()" id="splashBtn">START ?</button>
+    </div>
+
+    <div id="mode-screen" class="screen" style="display: none;">
+        <h1 class="screen-title" id="modeTitle">«Œ — ÿÊ— «··⁄»</h1>
+        <button class="big-btn" onclick="selectMode('ai')" id="btnAi">÷œ «·–ﬂ«¡ «·«’ÿ‰«⁄Ì ??</button>
+        <button class="big-btn" onclick="selectMode('local')" id="btnLocal">÷œ ’œÌﬁ „Õ·Ì ??</button>
+    </div>
+
+    <div id="diff-screen" class="screen" style="display: none;">
+        <h1 class="screen-title" id="diffTitle">«Œ — «·’⁄Ê»…</h1>
+        <button class="big-btn btn-easy" onclick="selectDifficulty('easy')" id="btnEasy">”Â· ??</button>
+        <button class="big-btn btn-medium" onclick="selectDifficulty('medium')" id="btnMedium">„ Ê”ÿ ??</button>
+        <button class="big-btn btn-hard" onclick="selectDifficulty('hard')" id="btnHard">’⁄» ??</button>
+        <button class="big-btn btn-impossible" onclick="selectDifficulty('impossible')" id="btnImpossible">„” ÕÌ· ??</button>
+    </div>
+
+    <div class="game-container" id="game-container">
+        <div class="top-bar">
+            <button class="icon-btn" onclick="toggleTheme()" id="themeBtn">??</button>
+            <button class="icon-btn" onclick="toggleSound()" id="soundBtn">?? ON</button>
+            <button class="icon-btn" onclick="changeLanguage()" id="langBtn">?? AR</button>
+            <button class="icon-btn" onclick="backToModes()" id="backBtn">?? «·ﬁ«∆„…</button>
+        </div>
+
+        <div class="status" id="status"></div>
+
+        <div class="board" id="board">
+            <div class="cell" data-index="0"></div>
+            <div class="cell" data-index="1"></div>
+            <div class="cell" data-index="2"></div>
+            <div class="cell" data-index="3"></div>
+            <div class="cell" data-index="4"></div>
+            <div class="cell" data-index="5"></div>
+            <div class="cell" data-index="6"></div>
+            <div class="cell" data-index="7"></div>
+            <div class="cell" data-index="8"></div>
+        </div>
+
+        <button class="reset-btn" onclick="resetGame()" id="resetBtn"></button>
+    </div>
+
+    <script>
+        const cells = document.querySelectorAll('.cell');
+        const statusElement = document.getElementById('status');
+        const themeBtn = document.getElementById('themeBtn');
+        const soundBtn = document.getElementById('soundBtn');
+        const htmlTag = document.getElementById('html-tag');
+        const langBtn = document.getElementById('langBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const splashBtn = document.getElementById('splashBtn');
+        
+        let board = ["", "", "", "", "", "", "", "", ""];
+        let isGameActive = true;
+        let currentPlayer = "X";
+        let isSoundEnabled = true; 
+        let chosenMode = "ai"; 
+        let chosenDifficulty = "medium";
+        
+        let currentLang = "ar";
+        const languages = ["ar", "en", "fr", "de"];
+        
+        const translations = {
+            ar: {
+                title: "œŒÊ· «··⁄»… ?", modeTitle: "«Œ — ÿÊ— «··⁄» ?", btnAi: "«·–ﬂ«¡ «·«’ÿ‰«⁄Ì ??", btnLocal: "’œÌﬁ „Õ·Ì ??",
+                diffTitle: "«Œ — «·’⁄Ê»… ??", btnEasy: "”Â· ??", btnMedium: "„ Ê”ÿ ??", btnHard: "’⁄» ??", btnImpossible: "„” ÕÌ· ??",
+                turnX: "œÊ—ﬂ «·¬‰ (X)", turnO: "œÊ— «··«⁄» O", aiThinking: "«·–ﬂ«¡ «·«’ÿ‰«⁄Ì Ì›ﬂ—... ??", back: "?? «·ﬁ«∆„…",
+                winX: " Â«‰Ì‰«! «··«⁄» X ›«“! ??", winO: "«··«⁄» O ›«“! ??/??", draw: " ⁄«œ·! „»«—… —«∆⁄…. ??", reset: "≈⁄«œ… «··⁄» ??", dir: "rtl"
+            },
+            en: {
+                title: "START GAME ?", modeTitle: "CHOOSE MODE ?", btnAi: "VS AI ??", btnLocal: "Local Friend ??",
+                diffTitle: "SELECT DIFFICULTY ??", btnEasy: "Easy ??", btnMedium: "Medium ??", btnHard: "Hard ??", btnImpossible: "Impossible ??",
+                turnX: "Your Turn (X)", turnO: "Player O's Turn", aiThinking: "AI is thinking... ??", back: "?? Menu",
+                winX: "Congrats! Player X Wins! ??", winO: "Player O Wins! ??/??", draw: "Draw Game! ??", reset: "RESET GAME ??", dir: "ltr"
+            },
+            fr: {
+                title: "JOUER ?", modeTitle: "CHOISIR MODE ?", btnAi: "VS IA ??", btnLocal: "Ami Local ??",
+                diffTitle: "DIFFICULTE ??", btnEasy: "Facile ??", btnMedium: "Moyen ??", btnHard: "Difficile ??", btnImpossible: "Impossible ??",
+                turnX: "Votre tour (X)", turnO: "Tour du joueur O", aiThinking: "L'IA rÈflÈchit... ??", back: "?? Menu",
+                winX: "FÈlicitations! Joueur X Gagne! ??", winO: "Joueur O Gagne! ??/??", draw: "Match nul! ??", reset: "RECOMMENCER ??", dir: "ltr"
+            },
+            de: {
+                title: "SPIEL STARTEN ?", modeTitle: "MODUS W?HLEN ?", btnAi: "VS KI ??", btnLocal: "Freund ??",
+                diffTitle: "SCHWIERIGKEIT ??", btnEasy: "Einfach ??", btnMedium: "Mittel ??", btnHard: "Schwer ??", btnImpossible: "Unm?glich ??",
+                turnX: "Du bist dran (X)", turnO: "Spieler O ist dran", aiThinking: "KI denkt nach... ??", back: "?? Men¸",
+                winX: "Gl¸ckwunsch! Spieler X gewinnt! ??", winO: "Spieler O gewinnt! ??/??", draw: "Unentschieden! ??", reset: "NEUSTART ??", dir: "ltr"
+            }
+        };
+
+        const winningConditions = [
+            [0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]
+        ];
+
+        function updateLanguage() {
+            const t = translations[currentLang];
+            htmlTag.setAttribute('dir', t.dir);
+            htmlTag.setAttribute('lang', currentLang);
+            splashBtn.innerText = t.title;
+            resetBtn.innerText = t.reset;
+            
+            document.getElementById('modeTitle').innerText = t.modeTitle;
+            document.getElementById('btnAi').innerText = t.btnAi;
+            document.getElementById('btnLocal').innerText = t.btnLocal;
+            
+            document.getElementById('diffTitle').innerText = t.diffTitle;
+            document.getElementById('btnEasy').innerText = t.btnEasy;
+            document.getElementById('btnMedium').innerText = t.btnMedium;
+            document.getElementById('btnHard').innerText = t.btnHard;
+            document.getElementById('btnImpossible').innerText = t.btnImpossible;
+            
+            document.getElementById('backBtn').innerText = t.back;
+            langBtn.innerText = `?? ${currentLang.toUpperCase()}`;
+            
+            statusElement.innerText = currentPlayer === "X" ? t.turnX : t.turnO;
+        }
+
+        function changeLanguage() {
+            let nextIndex = (languages.indexOf(currentLang) + 1) % languages.length;
+            currentLang = languages[nextIndex];
+            updateLanguage();
+            playSound('clickX');
+        }
+
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'light');
+                themeBtn.innerText = "??";
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                themeBtn.innerText = "??";
+            }
+            playSound('clickX');
+        }
+
+        function toggleSound() {
+            isSoundEnabled = !isSoundEnabled;
+            soundBtn.innerText = isSoundEnabled ? "?? ON" : "?? OFF";
+            if(isSoundEnabled) playSound('clickX');
+        }
+
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        function playSound(type) {
+            if (!isSoundEnabled) return; 
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain); gain.connect(audioCtx.destination);
+
+            if (type === 'clickX' || type === 'clickO') {
+                osc.type = 'sawtooth'; 
+                osc.frequency.setValueAtTime(type === 'clickX' ? 587.33 : 349.23, audioCtx.currentTime);
+                gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                gain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.08);
+                osc.start(); osc.stop(audioCtx.currentTime + 0.08);
+            } else if (type === 'win') {
+                osc.type = 'square'; 
+                osc.frequency.setValueAtTime(523.25, audioCtx.currentTime);
+                osc.frequency.setValueAtTime(783.99, audioCtx.currentTime + 0.1);
+                osc.frequency.setValueAtTime(1046.50, audioCtx.currentTime + 0.2);
+                gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+                gain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.4);
+                osc.start(); osc.stop(audioCtx.currentTime + 0.4);
+            } else if (type === 'draw') {
+                osc.type = 'sine'; osc.frequency.setValueAtTime(220, audioCtx.currentTime);
+                gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+                gain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.3);
+                osc.start(); osc.stop(audioCtx.currentTime + 0.3);
+            }
+        }
+
+        function showModeScreen() {
+            playSound('win');
+            document.getElementById('splash-screen').style.display = 'none';
+            document.getElementById('mode-screen').style.display = 'flex';
+        }
+
+        function selectMode(mode) {
+            playSound('clickX');
+            chosenMode = mode;
+            document.getElementById('mode-screen').style.display = 'none';
+            
+            if (mode === 'ai') {
+                //  › Õ Ê«ÃÂ… «·’⁄Ê»… «·Œ«’…
+                document.getElementById('diff-screen').style.display = 'flex';
+            } else {
+                //  › Õ «··⁄»… „»«‘—… ··⁄» «·„Õ·Ì
+                document.getElementById('game-container').style.display = 'block';
+                resetGame();
+            }
+        }
+
+        function selectDifficulty(diff) {
+            playSound('win');
+            chosenDifficulty = diff;
+            document.getElementById('diff-screen').style.display = 'none';
+            document.getElementById('game-container').style.display = 'block';
+            resetGame();
+        }
+
+        function backToModes() {
+            playSound('clickO');
+            document.getElementById('game-container').style.display = 'none';
+            document.getElementById('diff-screen').style.display = 'none';
+            document.getElementById('mode-screen').style.display = 'flex';
+        }
+
+        cells.forEach(cell => cell.addEventListener('click', handleCellClick));
+
+        function handleCellClick(e) {
+            const clickedCell = e.target;
+            const clickedIndex = parseInt(clickedCell.getAttribute('data-index'));
+            const t = translations[currentLang];
+
+            if (board[clickedIndex] !== "" || !isGameActive) return;
+
+            playSound(currentPlayer === "X" ? 'clickX' : 'clickO');
+            makeMove(clickedIndex, currentPlayer);
+
+            if (checkWin(board, currentPlayer)) {
+                setTimeout(() => playSound('win'), 150);
+                endGame(currentPlayer === "X" ? t.winX : t.winO);
+                highlightWinningLine(board, currentPlayer);
+                return;
+            }
+
+            if (board.every(cell => cell !== "")) {
+                setTimeout(() => playSound('draw'), 150);
+                endGame(t.draw); return;
+            }
+
+            if (chosenMode === 'local') {
+                currentPlayer = currentPlayer === "X" ? "O" : "X";
+                statusElement.innerText = currentPlayer === "X" ? t.turnX : t.turnO;
+            } else {
+                isGameActive = false; 
+                statusElement.innerText = t.aiThinking;
+                
+                setTimeout(() => {
+                    const aiMove = getBestMove();
+                    playSound('clickO');
+                    makeMove(aiMove, "O");
+
+                    if (checkWin(board, "O")) {
+                        setTimeout(() => playSound('draw'), 150);
+                        endGame(t.winO);
+                        highlightWinningLine(board, "O"); return;
+                    }
+
+                    if (board.every(cell => cell !== "")) {
+                        setTimeout(() => playSound('draw'), 150);
+                        endGame(t.draw); return;
+                    }
+
+                    isGameActive = true;
+                    currentPlayer = "X";
+                    statusElement.innerText = t.turnX;
+                }, 500);
+            }
+        }
+
+        function makeMove(index, player) {
+            board[index] = player;
+            cells[index].innerText = player;
+            cells[index].classList.add(player.toLowerCase());
+        }
+
+        function endGame(message) {
+            statusElement.innerText = message;
+            isGameActive = false;
+        }
+
+        function highlightWinningLine(currentBoard, player) {
+            winningConditions.forEach(condition => {
+                if (condition.every(index => currentBoard[index] === player)) {
+                    condition.forEach(index => cells[index].classList.add('winner'));
+                }
+            });
+        }
+
+        function getBestMove() {
+            const emptyIndices = board.map((val, idx) => val === "" ? idx : null).filter(val => val !== null);
+            if (chosenDifficulty === 'easy') return emptyIndices[Math.floor(Math.random() * emptyIndices.length)];
+            if (chosenDifficulty === 'medium') return Math.random() > 0.5 ? minimax(board, "O").index : emptyIndices[Math.floor(Math.random() * emptyIndices.length)];
+            if (chosenDifficulty === 'hard') return Math.random() > 0.15 ? minimax(board, "O").index : emptyIndices[Math.floor(Math.random() * emptyIndices.length)];
+            return minimax(board, "O").index;
+        }
+
+        function checkWin(currentBoard, player) {
+            return winningConditions.some(condition => condition.every(index => currentBoard[index] === player));
+        }
+
+        function minimax(newBoard, player) {
+            const availSpots = newBoard.map((val, idx) => val === "" ? idx : null).filter(val => val !== null);
+            if (checkWin(newBoard, "X")) return { score: -10 };
+            if (checkWin(newBoard, "O")) return { score: 10 };
+            if (availSpots.length === 0) return { score: 0 };
+
+            const moves = [];
+            for (let i = 0; i < availSpots.length; i++) {
+                const move = {}; move.index = newBoard[availSpots[i]];
+                newBoard[availSpots[i]] = player;
+                move.score = player === "O" ? minimax(newBoard, "X").score : minimax(newBoard, "O").score;
+                newBoard[availSpots[i]] = move.index; move.index = availSpots[i]; moves.push(move);
+            }
+
+            let bestMove;
+            if (player === "O") {
+                let bestScore = -10000;
+                for (let i = 0; i < moves.length; i++) { if (moves[i].score > bestScore) { bestScore = moves[i].score; bestMove = i; } }
+            } else {
+                let bestScore = 10000;
+                for (let i = 0; i < moves.length; i++) { if (moves[i].score < bestScore) { bestScore = moves[i].score; bestMove = i; } }
+            }
+            return moves[bestMove];
+        }
+
+        function resetGame() {
+            board = ["", "", "", "", "", "", "", "", ""];
+            isGameActive = true; currentPlayer = "X";
+            const t = translations[currentLang];
+            statusElement.innerText = t.turnX;
+            cells.forEach(cell => { cell.innerText = ""; cell.className = "cell"; });
+        }
+
+        updateLanguage();
+    </script>
+</body>
+</html>
