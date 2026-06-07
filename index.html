@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>XO Ultra - Hyper Neon</title>
     <style>
-        /* «·„ €Ì—«  «·’«Œ»… Ê«·„Õ”‰… ··Ê÷⁄Ì‰ */
+        /* √á√°√£√ä√õ√≠√ë√á√ä √á√°√ï√á√é√à√â √¶√á√°√£√ç√ì√§√â √°√°√¶√ñ√ö√≠√§ */
         :root {
             --bg-color: #ff0055; 
             --container-bg: #ffffff;
@@ -60,7 +60,7 @@
             background-image: linear-gradient(rgba(255, 0, 255, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 0, 255, 0.05) 1px, transparent 1px);
         }
 
-        /* «·‘«‘«  «·„” ﬁ·… */
+        /* √á√°√î√á√î√á√ä √á√°√£√ì√ä√û√°√â */
         .screen {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -91,7 +91,7 @@
             100% { filter: drop-shadow(0 0 35px #ff0055) contrast(1.5); }
         }
 
-        /* √“—«— ÷Œ„… Ê’«Œ»… ··‘«‘«  */
+        /* √É√í√ë√á√ë √ñ√é√£√â √¶√ï√á√é√à√â √°√°√î√á√î√á√ä */
         .big-btn {
             padding: 18px 45px;
             font-size: 1.4rem;
@@ -113,13 +113,13 @@
             box-shadow: 0 0 35px #00ffff;
         }
 
-        /* √“—«— ’⁄Ê»… „Œ’’… «·√·Ê«‰ */
+        /* √É√í√ë√á√ë √ï√ö√¶√à√â √£√é√ï√ï√â √á√°√É√°√¶√á√§ */
         .btn-easy { background: #39ff14; box-shadow: 0 0 15px #39ff14; }
         .btn-medium { background: #ffcc00; box-shadow: 0 0 15px #ffcc00; }
         .btn-hard { background: #ff5500; box-shadow: 0 0 15px #ff5500; }
         .btn-impossible { background: #ff0055; box-shadow: 0 0 25px #ff0055; color: white; }
 
-        /* Õ«ÊÌ… «··⁄»… «·—∆Ì”Ì… */
+        /* √ç√á√¶√≠√â √á√°√°√ö√à√â √á√°√ë√Ü√≠√ì√≠√â */
         .game-container {
             background-color: var(--container-bg);
             padding: 25px;
@@ -133,7 +133,7 @@
             position: relative;
         }
 
-        /* «·»«— «·⁄·ÊÌ ··√“—«— */
+        /* √á√°√à√á√ë √á√°√ö√°√¶√≠ √°√°√É√í√ë√á√ë */
         .top-bar {
             display: flex;
             justify-content: space-between;
@@ -167,7 +167,7 @@
             text-transform: uppercase;
         }
 
-        /* ‘»ﬂ… «··⁄» Ê«·„—»⁄«  */
+        /* √î√à√ü√â √á√°√°√ö√à √¶√á√°√£√ë√à√ö√á√ä */
         .board {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -210,13 +210,13 @@
             100% { transform: scale(1); }
         }
 
-        /*  ⁄“Ì“  ÊÂÃ «·„—»⁄«  ›Ì «·Ê÷⁄ «·œ«ﬂ‰ */
+        /* √ä√ö√í√≠√í √ä√¶√•√å √á√°√£√ë√à√ö√á√ä √ù√≠ √á√°√¶√ñ√ö √á√°√è√á√ü√§ */
         [data-theme="dark"] .cell { box-shadow: 0 6px 0 var(--border-color); }
         [data-theme="dark"] .cell:hover { box-shadow: 0 10px 0 var(--border-color), 0 0 20px var(--text-secondary); }
         [data-theme="dark"] .cell.x { text-shadow: 0 0 15px #00ffff, 0 0 30px #00ffff; }
         [data-theme="dark"] .cell.o { text-shadow: 0 0 15px #ff0055, 0 0 30px #ff0055; }
 
-        /*  √ÀÌ— «·›Ê“ */
+        /* √ä√É√ã√≠√ë √á√°√ù√¶√í */
         .cell.winner {
             background-color: var(--accent-color) !important;
             border-color: var(--accent-color) !important;
@@ -265,17 +265,17 @@
     </div>
 
     <div id="mode-screen" class="screen" style="display: none;">
-        <h1 class="screen-title" id="modeTitle">«Œ — ÿÊ— «··⁄»</h1>
-        <button class="big-btn" onclick="selectMode('ai')" id="btnAi">÷œ «·–ﬂ«¡ «·«’ÿ‰«⁄Ì ??</button>
-        <button class="big-btn" onclick="selectMode('local')" id="btnLocal">÷œ ’œÌﬁ „Õ·Ì ??</button>
+        <h1 class="screen-title" id="modeTitle">√á√é√ä√ë √ò√¶√ë √á√°√°√ö√à</h1>
+        <button class="big-btn" onclick="selectMode('ai')" id="btnAi">√ñ√è √á√°√ê√ü√á√Å √á√°√á√ï√ò√§√á√ö√≠ ??</button>
+        <button class="big-btn" onclick="selectMode('local')" id="btnLocal">√ñ√è √ï√è√≠√û √£√ç√°√≠ ??</button>
     </div>
 
     <div id="diff-screen" class="screen" style="display: none;">
-        <h1 class="screen-title" id="diffTitle">«Œ — «·’⁄Ê»…</h1>
-        <button class="big-btn btn-easy" onclick="selectDifficulty('easy')" id="btnEasy">”Â· ??</button>
-        <button class="big-btn btn-medium" onclick="selectDifficulty('medium')" id="btnMedium">„ Ê”ÿ ??</button>
-        <button class="big-btn btn-hard" onclick="selectDifficulty('hard')" id="btnHard">’⁄» ??</button>
-        <button class="big-btn btn-impossible" onclick="selectDifficulty('impossible')" id="btnImpossible">„” ÕÌ· ??</button>
+        <h1 class="screen-title" id="diffTitle">√á√é√ä√ë √á√°√ï√ö√¶√à√â</h1>
+        <button class="big-btn btn-easy" onclick="selectDifficulty('easy')" id="btnEasy">√ì√•√° ??</button>
+        <button class="big-btn btn-medium" onclick="selectDifficulty('medium')" id="btnMedium">√£√ä√¶√ì√ò ??</button>
+        <button class="big-btn btn-hard" onclick="selectDifficulty('hard')" id="btnHard">√ï√ö√à ??</button>
+        <button class="big-btn btn-impossible" onclick="selectDifficulty('impossible')" id="btnImpossible">√£√ì√ä√ç√≠√° ??</button>
     </div>
 
     <div class="game-container" id="game-container">
@@ -283,7 +283,7 @@
             <button class="icon-btn" onclick="toggleTheme()" id="themeBtn">??</button>
             <button class="icon-btn" onclick="toggleSound()" id="soundBtn">?? ON</button>
             <button class="icon-btn" onclick="changeLanguage()" id="langBtn">?? AR</button>
-            <button class="icon-btn" onclick="backToModes()" id="backBtn">?? «·ﬁ«∆„…</button>
+            <button class="icon-btn" onclick="backToModes()" id="backBtn">?? √á√°√û√á√Ü√£√â</button>
         </div>
 
         <div class="status" id="status"></div>
@@ -325,10 +325,10 @@
         
         const translations = {
             ar: {
-                title: "œŒÊ· «··⁄»… ?", modeTitle: "«Œ — ÿÊ— «··⁄» ?", btnAi: "«·–ﬂ«¡ «·«’ÿ‰«⁄Ì ??", btnLocal: "’œÌﬁ „Õ·Ì ??",
-                diffTitle: "«Œ — «·’⁄Ê»… ??", btnEasy: "”Â· ??", btnMedium: "„ Ê”ÿ ??", btnHard: "’⁄» ??", btnImpossible: "„” ÕÌ· ??",
-                turnX: "œÊ—ﬂ «·¬‰ (X)", turnO: "œÊ— «··«⁄» O", aiThinking: "«·–ﬂ«¡ «·«’ÿ‰«⁄Ì Ì›ﬂ—... ??", back: "?? «·ﬁ«∆„…",
-                winX: " Â«‰Ì‰«! «··«⁄» X ›«“! ??", winO: "«··«⁄» O ›«“! ??/??", draw: " ⁄«œ·! „»«—… —«∆⁄…. ??", reset: "≈⁄«œ… «··⁄» ??", dir: "rtl"
+                title: "√è√é√¶√° √á√°√°√ö√à√â ?", modeTitle: "√á√é√ä√ë √ò√¶√ë √á√°√°√ö√à ?", btnAi: "√á√°√ê√ü√á√Å √á√°√á√ï√ò√§√á√ö√≠ ??", btnLocal: "√ï√è√≠√û √£√ç√°√≠ ??",
+                diffTitle: "√á√é√ä√ë √á√°√ï√ö√¶√à√â ??", btnEasy: "√ì√•√° ??", btnMedium: "√£√ä√¶√ì√ò ??", btnHard: "√ï√ö√à ??", btnImpossible: "√£√ì√ä√ç√≠√° ??",
+                turnX: "√è√¶√ë√ü √á√°√Ç√§ (X)", turnO: "√è√¶√ë √á√°√°√á√ö√à O", aiThinking: "√á√°√ê√ü√á√Å √á√°√á√ï√ò√§√á√ö√≠ √≠√ù√ü√ë... ??", back: "?? √á√°√û√á√Ü√£√â",
+                winX: "√ä√•√á√§√≠√§√á! √á√°√°√á√ö√à X √ù√á√í! ??", winO: "√á√°√°√á√ö√à O √ù√á√í! ??/??", draw: "√ä√ö√á√è√°! √£√à√á√ë√â √ë√á√Ü√ö√â. ??", reset: "√Ö√ö√á√è√â √á√°√°√ö√à ??", dir: "rtl"
             },
             en: {
                 title: "START GAME ?", modeTitle: "CHOOSE MODE ?", btnAi: "VS AI ??", btnLocal: "Local Friend ??",
@@ -339,14 +339,14 @@
             fr: {
                 title: "JOUER ?", modeTitle: "CHOISIR MODE ?", btnAi: "VS IA ??", btnLocal: "Ami Local ??",
                 diffTitle: "DIFFICULTE ??", btnEasy: "Facile ??", btnMedium: "Moyen ??", btnHard: "Difficile ??", btnImpossible: "Impossible ??",
-                turnX: "Votre tour (X)", turnO: "Tour du joueur O", aiThinking: "L'IA rÈflÈchit... ??", back: "?? Menu",
-                winX: "FÈlicitations! Joueur X Gagne! ??", winO: "Joueur O Gagne! ??/??", draw: "Match nul! ??", reset: "RECOMMENCER ??", dir: "ltr"
+                turnX: "Votre tour (X)", turnO: "Tour du joueur O", aiThinking: "L'IA r√©fl√©chit... ??", back: "?? Menu",
+                winX: "F√©licitations! Joueur X Gagne! ??", winO: "Joueur O Gagne! ??/??", draw: "Match nul! ??", reset: "RECOMMENCER ??", dir: "ltr"
             },
             de: {
                 title: "SPIEL STARTEN ?", modeTitle: "MODUS W?HLEN ?", btnAi: "VS KI ??", btnLocal: "Freund ??",
                 diffTitle: "SCHWIERIGKEIT ??", btnEasy: "Einfach ??", btnMedium: "Mittel ??", btnHard: "Schwer ??", btnImpossible: "Unm?glich ??",
-                turnX: "Du bist dran (X)", turnO: "Spieler O ist dran", aiThinking: "KI denkt nach... ??", back: "?? Men¸",
-                winX: "Gl¸ckwunsch! Spieler X gewinnt! ??", winO: "Spieler O gewinnt! ??/??", draw: "Unentschieden! ??", reset: "NEUSTART ??", dir: "ltr"
+                turnX: "Du bist dran (X)", turnO: "Spieler O ist dran", aiThinking: "KI denkt nach... ??", back: "?? Men√º",
+                winX: "Gl√ºckwunsch! Spieler X gewinnt! ??", winO: "Spieler O gewinnt! ??/??", draw: "Unentschieden! ??", reset: "NEUSTART ??", dir: "ltr"
             }
         };
 
@@ -444,10 +444,10 @@
             document.getElementById('mode-screen').style.display = 'none';
             
             if (mode === 'ai') {
-                //  › Õ Ê«ÃÂ… «·’⁄Ê»… «·Œ«’…
+                // √ä√ù√ä√ç √¶√á√å√•√â √á√°√ï√ö√¶√à√â √á√°√é√á√ï√â
                 document.getElementById('diff-screen').style.display = 'flex';
             } else {
-                //  › Õ «··⁄»… „»«‘—… ··⁄» «·„Õ·Ì
+                // √ä√ù√ä√ç √á√°√°√ö√à√â √£√à√á√î√ë√â √°√°√ö√à √á√°√£√ç√°√≠
                 document.getElementById('game-container').style.display = 'block';
                 resetGame();
             }
